@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Korte.space' });
+  res.render('index', { title: 'Caesar Management System' });
 });
 
 module.exports = router;
