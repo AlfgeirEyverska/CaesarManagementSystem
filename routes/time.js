@@ -8,7 +8,7 @@ function update_clock(req, res, next, io) {
         const now = new Date();
         let update = date.format(now, 'hh:mm:ss A');
         io.emit('tick', update);
-        console.log("Clock Updated!");
+        // console.log("Clock Updated!");
         update_clock(req, res, next, io)
     }, 1000);
 }
