@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time</title>
+    <script src='/socket.io/socket.io.js'></script>
+    <script>
+        let socket = io();
+        socket.on('tick', function (update) {
+            let clock = document.getElementById('clock');
+            clock.innerText = update;
+        })
+    </script>
+</head>
+<body>
+<h1>The Current Time</h1>
+<h2 id="clock">Time</h2>
+</body>
+</html>
