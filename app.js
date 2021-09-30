@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// router setup for the first level
 const indexRouter = require('./routes/index');
 const caesarRouter = require('./routes/caesar');
 const usersRouter = require('./routes/users');
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// connects the routers to their paths
 app.use('/', indexRouter);
 app.use('/caesar', caesarRouter);
 app.use('/users', usersRouter);
