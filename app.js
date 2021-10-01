@@ -7,7 +7,7 @@ const logger = require('morgan');
 // router setup for the first level
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const timeRouter = require('./routes/time')
+const timeRouter = require('./routes/time');
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // connects the routers to their paths
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/time', timeRouter)
+app.use('/time', timeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
