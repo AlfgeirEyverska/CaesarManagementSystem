@@ -22,9 +22,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // connects the routers to their paths
-app.use('/caesar', indexRouter);
-app.use('/caesar/users', usersRouter);
-app.use('/caesar/time', timeRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/time', timeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
