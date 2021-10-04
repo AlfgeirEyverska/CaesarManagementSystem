@@ -97,5 +97,5 @@ const io = new Server(server);
 app.set('socketio', io);
 
 io.on('connection', (socket) => {
-  console.log('a new connection has been established');
+  console.log('a new socket connection has been established');
 });
