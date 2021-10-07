@@ -187,7 +187,7 @@ function patchPrimate(name, body){
 
         // TODO: look into sql injection concerns
         const sql = `UPDATE primates SET ${updates} WHERE name = ?`;
-        
+
         console.log(sql);
         console.log('updates', updates);
         console.log('name', name);
