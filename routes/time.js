@@ -16,7 +16,7 @@ function update_clock(req, res, next, io) {
 /* GET time listing. */
 router.get('/', function(req, res, next) {
     const io = req.app.get('socketio');
-    res.sendFile(path.join(__dirname, '../public/time.html'));
+    res.sendFile(path.join(__dirname, '../public/html/time.html'));
 
     update_clock(req, res, next, io);
 });
