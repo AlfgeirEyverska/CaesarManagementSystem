@@ -41,8 +41,12 @@ connection.connect(function (err) {
 // GET everything
 function getAllPrimates(){
     return new Promise((resolve, reject) => {
-        // This question mark syntax will be explained below.
-        const sql = 'SELECT * FROM primates';
+        const sql = 'select primates.name, primates.birthYear, sexes.sex, species.species, zoos.name as zoo \n' +
+                    'from primates \n' +
+                    'join sexes on primates.sex = sexes.id \n' +
+                    'join species on primates.species = species.id \n' +
+                    'join zoos on primates.zoo = zoos.id';
+        console.log(sql);
         connection.query(sql, function (err, results, fields) {
             if (err) {
                 return reject(err);
@@ -56,6 +60,7 @@ router.get('/', function(req, res, next) {
     getAllPrimates()
         .then(data => {
             if (data.length > 0) {
+                console.log(data);
                 res.json(data);
             } else {
                 res.status(404).json({ message: 'Not Found' });
@@ -67,7 +72,12 @@ router.get('/', function(req, res, next) {
 // GET individual thing
 function getPrimateByName(name){
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM primates WHERE name = ?';
+        const sql = 'select primates.name, primates.birthYear, sexes.sex, species.species, zoos.name as zoo\n' +
+                    'from primates \n' +
+                    'join sexes on primates.sex = sexes.id\n' +
+                    'join species on primates.species = species.id\n' +
+                    'join zoos on primates.zoo = zoos.id\n' +
+                    'where primates.name = ?'
         console.log(sql);
         connection.query(sql, [name], function (err, results, fields) {
             if (err) {
@@ -77,10 +87,12 @@ function getPrimateByName(name){
         });
     });
 }
+
 router.get('/:name', function(req, res, next) {
     getPrimateByName(req.params.name)
         .then(data => {
             if (data.length > 0) {
+                console.log(data);
                 res.json(data);
             } else {
                 res.status(404).json({ message: 'Not Found' });
@@ -92,12 +104,17 @@ router.get('/:name', function(req, res, next) {
 // POST new thing
 function createNewPrimate(primate){
     return new Promise((resolve, reject) => {
-        const sql = 'INSERT INTO primates (name, birthYear, sex, species, zoo)\nVALUES (?, ?, ?, ?, ?)';
+        const sql = 'INSERT INTO primates (name, birthYear, sex, species, zoo) ' +
+            'VALUES (?, ?, ' +
+            '(select id from sexes where sex=?), ' +
+            '(select id from species where species=?), ' +
+            '(select id from zoos where name=?))';
         console.log(sql);
+        console.log(primate);
         connection.query(sql, [
             primate.name,
             primate.birthYear,
-            renderSex(primate.sex),
+            primate.sex,
             primate.species,
             primate.zoo
         ], function (err, results, fields) {
@@ -167,6 +184,7 @@ router.put('/:name', function(req, res) {
 
 // PATCH?!?!?! TODO: fix according to json patch method
 // https://medium.com/easyread/http-patch-method-ive-thought-the-wrong-way-c62ad281cb8
+// TODO: change to accomodate new schema
 function parseJsonPatch(jsonPatch){
     let str = '';
     jsonPatch.forEach((jsn) => {
