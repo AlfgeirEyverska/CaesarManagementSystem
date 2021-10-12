@@ -3,6 +3,7 @@ const router = express.Router();
 
 const primateRouter = require('./api/primates');
 const sessionRouter = require('./api/sessions');
+const eventRouter = require('./api/events');
 const mysql = require("mysql");
 
 // const connection = mysql.createConnection({
@@ -19,5 +20,6 @@ router.get('/', function(req, res, next) {
 
 router.use('/primates', primateRouter);
 router.use('/sessions', sessionRouter);
+router.use('/events', eventRouter);
 
 module.exports = router;
